@@ -21,7 +21,7 @@ public class Main extends Application {
 		primaryStage.setAlwaysOnTop(false);
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		
+
 	}
 
 }
