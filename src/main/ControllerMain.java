@@ -59,8 +59,18 @@ public class ControllerMain {
 				{
 					boardElements[1][i-1].setFill(Color.web("#ffe494"));
 				}
-				boardElements[1][i].setFill(Color.DARKKHAKI);
-				i++;
+				if(i<numberOfRows || i<numberOfColumns)
+				{
+					boardElements[1][i].setFill(Color.DARKKHAKI);
+					i++;
+				}
+				else
+				{
+					i=0;
+					System.out.println(i);
+					boardElements[1][i].setFill(Color.DARKKHAKI);
+				}
+
 			}
 		};
 		timer.schedule(task, 2000,500);
