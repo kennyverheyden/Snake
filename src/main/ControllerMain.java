@@ -45,32 +45,40 @@ public class ControllerMain {
 	{
 		fillBoard();
 		initializeGridPaneArray();
-		Rectangle rctRectangle = (Rectangle) boardElements[1][0];
+		Rectangle rctRectangle = (Rectangle) boardElements[0][0];
 		rctRectangle.setFill(Color.DARKKHAKI);
 
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() { // with anonymous class
-			int i=0;
+			int x=0;
+			int y=0;
 
 			@Override
 			public void run()
 			{
-				if(i!=0)
-				{
-					boardElements[1][i-1].setFill(Color.web("#ffe494"));
-				}
-				if(i<numberOfRows || i<numberOfColumns)
-				{
-					boardElements[1][i].setFill(Color.DARKKHAKI);
-					i++;
-				}
-				else
-				{
-					i=0;
-					System.out.println(i);
-					boardElements[1][i].setFill(Color.DARKKHAKI);
+				if (x == numberOfColumns) {
+					boardElements[x-1][y].setFill(Color.web("#ffe494"));
+					x = 0;
+				} else if (x < 0) {
+					x = numberOfColumns - 1;
 				}
 
+				if (y >= numberOfRows) {
+					boardElements[x][y-1].setFill(Color.web("#ffe494"));
+					y = 0;
+				} else if (y < 0) {
+					y = numberOfRows - 1;
+				}
+				if(x!=0)
+				{
+					boardElements[x-1][y].setFill(Color.web("#ffe494"));
+				}
+				if(y!=0)
+				{
+					boardElements[x][y-1].setFill(Color.web("#ffe494"));
+				}
+				boardElements[x][y].setFill(Color.DARKKHAKI);
+				y++;
 			}
 		};
 		timer.schedule(task, 2000,500);
