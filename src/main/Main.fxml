@@ -18,22 +18,7 @@
             <Font name="Papyrus" size="76.0" />
          </font>
       </Text>
-      <Text fx:id="lblTimer" fill="#858032" fontSmoothingType="LCD" layoutX="72.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00:00">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Text>
-      <Button fx:id="btnPlay" layoutX="88.0" layoutY="263.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Play">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnReset" layoutX="88.0" layoutY="302.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="Reset">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnExit" layoutX="88.0" layoutY="340.0" mnemonicParsing="false" onAction="#onClickbtnExit" prefHeight="30.0" prefWidth="70.0" text="Exit">
+      <Button fx:id="btnExit" layoutX="27.0" layoutY="400.0" mnemonicParsing="false" onAction="#onClickbtnExit" prefHeight="30.0" prefWidth="70.0" text="Exit">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
