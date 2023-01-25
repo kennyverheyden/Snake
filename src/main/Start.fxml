@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -11,14 +12,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootPane" maxWidth="700.0" prefHeight="650.0" prefWidth="700.0" style="-fx-background-color: #ffe494;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ControllerMain">
+<AnchorPane fx:id="rootPane" maxWidth="700.0" prefHeight="650.0" prefWidth="700.0" style="-fx-background-color: #ffe494;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ControllerStart">
    <children>
       <Text fx:id="lblTitle" fill="#858032" layoutX="55.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Snake">
          <font>
             <Font name="Papyrus" size="76.0" />
          </font>
       </Text>
-      <Button fx:id="btnExit" layoutX="27.0" layoutY="400.0" mnemonicParsing="false" onAction="#onClickbtnExit" prefHeight="30.0" prefWidth="70.0" text="Exit">
+      <Button fx:id="btnExit" layoutX="28.0" layoutY="400.0" mnemonicParsing="false" onAction="#onClickbtnExit" prefHeight="30.0" prefWidth="70.0" text="Exit">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -73,7 +74,45 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
+         <children>
+            <Button fx:id="btnStart" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClickbtnStart" prefHeight="49.0" prefWidth="184.0" text="START" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.columnSpan="9" GridPane.rowIndex="3" GridPane.rowSpan="8">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+            </Button>
+         </children>
       </GridPane>
+      <Label layoutX="62.0" layoutY="144.0" text="Score" textFill="#858032">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Text fx:id="txtScore" fill="#858032" fontSmoothingType="LCD" layoutX="63.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="82.63671875">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Text>
+      <Label layoutX="62.0" layoutY="223.0" text="Tail hit" textFill="#858032">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Text fx:id="txtTailHit" fill="#858032" fontSmoothingType="LCD" layoutX="63.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="82.63671875">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Text>
+      <Label layoutX="63.0" layoutY="308.0" text="Wall hit" textFill="#858032">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Text fx:id="txtWallHit" fill="#858032" fontSmoothingType="LCD" layoutX="63.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" wrappingWidth="82.63671875">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

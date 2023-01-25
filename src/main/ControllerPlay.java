@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
@@ -19,8 +21,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Text;
 
-public class ControllerMain {
+public class ControllerPlay {
 
 	@FXML
 	private Button btnPlay;
@@ -40,27 +43,47 @@ public class ControllerMain {
 	@FXML
 	private Rectangle rectangle;
 
+	@FXML
+	private Text txtScore;
+
+	@FXML
+	private Text txtTailHit;
+
+	@FXML
+	private Text txtWallHit;
+
 	//Parameters
 	private int numberOfRows=15; 	// Board size rows
 	private int numberOfColumns=15; // Board size columns
-	private int snakeLength=3; // Snake length
-	private int y=4;
-	private int x=0;
-	private String setDirection="right";
+	private int snakeLength=3; 		// Snake length
+	private int x=0;				// Init start x horizontal position
+	private int y=4;				// Init start y vertical position
+	private String setDirection="right"; // Set start direction
 
 	private Random random= new Random();
-	int rdX,rdY;
+	int rdX,rdY; // Store random values
 
-	private ArrayList<Node> snake = new ArrayList<Node>();
+	//Counters
+	public Integer score=0;			// Set start score
+	public Integer tailHit=0;
+	public Integer wallHit=0;
+
+	private ArrayList<Node> snake = new ArrayList<Node>(); // Store snake blocks
+
+	ArrayList<Integer> listX = new ArrayList<>(); // Store actual x horizontal snake position
+	ArrayList<Integer> listY = new ArrayList<>(); // Store actual y vertical snake position
 
 	private Rectangle[][] boardElements = null;
 
 	public void initialize()
 	{
+		txtScore.setText(score.toString());
+		txtTailHit.setText(tailHit.toString());
+		txtWallHit.setText(wallHit.toString());
 		fillBoard();
 		initializeGridPaneArray();
-		setSnake();
 		setCandy();
+		setSnake();
 		controls();
 		run();
 	}
@@ -70,14 +93,14 @@ public class ControllerMain {
 
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() { // with anonymous class
-
 			@Override
 			public void run()
 			{
 				moveSnake();
+
 			}
 		};
-		timer.schedule(task, 1000,400);
+		timer.schedule(task, 500,150);
 	}
 
 	// Set candy
@@ -95,17 +118,18 @@ public class ControllerMain {
 			Rectangle rect= (Rectangle) boardElements[i][y];
 			x=i;
 			AddSnakeBlocks(rect);
+			listX.add(x);
+			listY.add(y);
 			x++;
 		}
 	}
 
 	private void AddSnakeBlocks(Rectangle rect) {
-		((Shape) rect).setFill(Color.DARKKHAKI);
-		snake.add(rect);
-		if (snake.size()== snakeLength+1) {
-			removeSnakeBlocks();
-		}
-
+			((Shape) rect).setFill(Color.DARKKHAKI);
+			snake.add(rect);
+			if (snake.size()== snakeLength+1) {
+				removeSnakeBlocks();
+			}
 	}
 
 	private void removeSnakeBlocks() {
@@ -116,6 +140,10 @@ public class ControllerMain {
 
 	public void moveSnake() {
 		nextPosition();
+		
+		// Put the candy back in place when the snake body erase the block color
+		Rectangle rectCandy= (Rectangle)boardElements[rdX][rdY];
+		rectCandy.setFill(Color.GREEN);
 	}
 
 	private void nextPosition() {
@@ -123,16 +151,37 @@ public class ControllerMain {
 		// Got the candy
 		if(x== rdX && y== rdY) {
 			snakeLength++;
+			score++;
+			txtScore.setText(score.toString());
 			setCandy();
 		}
 
 		AddSnakeBlocks(boardElements[x][y]);
+
+		// Record occupied coordinates of snake, to check collision
+		listX.add(x);
+		listY.add(y);
+		if(listX.size() > snakeLength && listY.size() > snakeLength)
+		{
+			listX.remove(0);
+			listY.remove(0);
+		}
+		for(int i=0;i<listX.size()-1;i++)
+		{
+			if(listX.get(i)==x && listY.get(i)==y)
+			{
+				tailHit++;
+				txtTailHit.setText(tailHit.toString());
+			}
+		}
 
 		if(setDirection=="left")
 		{
 			if(x==0)
 			{
 				x=numberOfColumns-1;
+				wallHit++;
+				txtWallHit.setText(wallHit.toString());
 			}
 			else
 			{
@@ -144,6 +193,8 @@ public class ControllerMain {
 			if(x==numberOfColumns-1)
 			{
 				x=0;
+				wallHit++;
+				txtWallHit.setText(wallHit.toString());
 			}
 			else
 			{
@@ -155,6 +206,8 @@ public class ControllerMain {
 			if(y==numberOfRows-1)
 			{
 				y=0;
+				wallHit++;
+				txtWallHit.setText(wallHit.toString());
 			}
 			else
 			{
@@ -166,6 +219,8 @@ public class ControllerMain {
 			if(y==0)
 			{
 				y=numberOfRows-1;
+				wallHit++;
+				txtWallHit.setText(wallHit.toString());
 			}
 			else
 			{
@@ -199,9 +254,7 @@ public class ControllerMain {
 					break;
 				}
 			}
-
 		});
-
 	}
 
 	// Init board array
